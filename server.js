@@ -25,6 +25,11 @@ const rappers = {
         'birthName':'Dylan',
         'birthLocation':'Dylan'
        },
+       'unknown':{
+        'age': 0,
+        'birthName': 'unknown',
+        'birthLocation': 'unknown'
+       }
 
    
 
@@ -35,18 +40,17 @@ const rappers = {
 app.get('/', (request, response)=>{
     response.sendFile(__dirname + '/index.html')
 })
-//get the rappers name
-app.get('/api/:rapperName', (request,response)=>{
-    const rappersName = request.params.rapperName.toLowerCase()
-    
-    if(rappers[rappersName]){
-        response.json(rappers[rappersName])
+app.get('/api/:name', (request,response)=>{
+    const rapperName = request.params.name.toLowerCase()
+    if( rappers[rapperName] ){
+        response.json(rappers[rapperName])
     }else{
-        response.json(rappers['dylan'])
+        response.json(rappers['unknown'])
     }
-    
+        response.json(rappers)
 })
 
-app.listen(PORT, ()=>{
+
+app.listen(process.env.PORT || PORT, ()=>{
     console.log(`The server is running on ${PORT}! You better go catch it!`)
 })
